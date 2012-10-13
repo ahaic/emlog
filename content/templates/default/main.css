@@ -1,5 +1,5 @@
-body {background: url(/emlog/content/templates/default/images/bd-bg.jpeg);  text-align:center; font:13px/18px Arial,Helvetica,sans-serif; margin: 0px auto 0px; padding: 0px;}
-#wrap { width: 960px; text-align:left; margin: 0px auto 0px; padding: 0px;}
+body {background: #FFFFFF; color: #323232; text-align:center; font:13px/18px Arial,Helvetica,sans-serif; margin: 0px auto 0px; padding: 0px;}
+#wrap {background: #FFFFFF; width: 960px; text-align:left; margin: 0px auto 0px; padding: 0px;}
 img{ border:none;}
 
 a:link, a:active, a:visited {color:#886353; text-decoration:none;}
@@ -10,26 +10,21 @@ a:hover {color:#886353; text-decoration:underline;}
 #header h1 a:active {color: #1F1F1F; text-decoration: none;}
 #header h1 a:visited {color: #1F1F1F; text-decoration: none;}
 #header h1 a:hover {color: #1F1F1F; text-decoration: none;}
-#header h3 {color: #525252; font-size: 15px; font-weight: normal; margin: 0px 0px 0px 40px; padding: 10px 0px 10px 0px;}
+#header h3 {color: #525252; font-style: italic; font-size: 15px; font-weight: normal; margin: 0px 0px 0px 40px; padding: 10px 0px 10px 0px;}
 
-#nav {text-align: center; margin: 10px 0px 20px 0px; padding: 0px; 
-		background: url(/emlog/content/templates/default/images/bg1.gif); 
-		height:54px;
-		line-height: 34px;
-		float:right;
-		
-		}
-
-
+#nav {text-align: center; margin: 10px 0px 20px 0px; padding: 0px;}
 #nav ul {margin: 15px 0px 0px 0px; padding: 0px;}
-#nav li {display: inline; font-weight:bold; padding:0 5px 0 10px;  position:relative;}
-#nav a:link {color:#ccc; text-decoration:none;}
-#nav a:active {color:#ccc; text-decoration:none;}
-#nav a:visited {color:#ccc; text-decoration:none;}
-#nav a:hover {color:#ccc; text-decoration:underline;}
+#nav li {display: inline; font-weight:bold; padding:0 5px 0 10px;}
+#nav a:link {color:#1F1F1F; text-decoration:none;}
+#nav a:active {color:#1F1F1F; text-decoration:none;}
+#nav a:visited {color:#1F1F1F; text-decoration:none;}
+#nav a:hover {color:#1F1F1F; text-decoration:underline;}
+#nav .current a:link {color:#1F1F1F; text-decoration:underline;}
+#nav .current a:active {color:#1F1F1F; text-decoration:underline;}
+#nav .current a:visited {color:#1F1F1F; text-decoration:underline;}
+#nav .current a:hover {color:#1F1F1F; text-decoration:none;}
 
-
-#banner {height:auto;}   /* 134px */
+#banner {height:134px;}
 
 #pagenavi{text-align:center; font-size:14px}
 #pagenavi a{ padding:0px 3px;}
@@ -66,6 +61,7 @@ a img.aligncenter {display: block; border:none; margin:10px auto 10px auto;}
 #sidebar ul li ul li {background:transparent url("images/bullet.png") 0px 3px no-repeat; margin: 0px 0px 0px 0px; padding: 0px 0px 0px 18px;}
 #sidebar li {list-style-type:none;}
 #sidebar .search {background: url("images/search.png") no-repeat scroll 5px 3px transparent;border: 1px solid #CCCCCC;border-radius: 3px 3px 3px 3px;font-size: 12px;line-height: 1.2em;padding: 4px 10px 4px 28px;}
+
 #footerbar {margin: 40px auto 50px; padding: 10px 0px; width: 960px; text-align: center; height: 100%; overflow: hidden; border-top: 1px solid #E2DDDE;}
 .footerbox {float:left; width: 31%; float: left; margin: 5px 0px 0px 0px; padding: 0px 10px 20px 10px;}
 .footerbox ul {list-style-type: none; margin: 0px; padding: 0px;}
@@ -106,11 +102,14 @@ a img.aligncenter {display: block; border:none; margin:10px auto 10px auto;}
 .day2{font-weight:bold}
 .sun{color:#333; font-weight:bold}
 .week{color:#333}
+
 .rss{ margin:20px 0px;}
+
 #twitter li {border-bottom: dotted #CCCCCC 1px;list-style:none;}
 #twitter li p {font-size: 10px;padding-left: 68px; text-align:right; padding:5px 0px 2px;}
 #twitter p {font-size: 12px;text-align:right;}
 #twitter li small {font-size: 10px;padding: 0px 10px;}
+#twitter li .t_img{background:url(images/img.gif) no-repeat;padding: 0 7px;margin: 0 0 0 10px;}
 
 #tw .main_img{ border:1px #2772ae solid; float:left;}
 #tw .main_img img{ border:1px #fff solid}
@@ -141,13 +140,11 @@ a img.aligncenter {display: block; border:none; margin:10px auto 10px auto;}
 #tw ul .huifu .text{ width:60px;}
 #tw ul .button_p{background:url(images/weibe_button.gif) no-repeat; border:0;cursor:pointer; _cursor:hand; width:63px; height:25px;}
 #tw .tbutton{ font-size:12px;float:none; margin-bottom:3px;}
-#tw .loading{background:url(images/loading.gif) no-repeat 200px 2px; height:20px;}
 #tw .tbutton input{ width:90px; border:#CCCCCC solid 1px; }
 #tw .tbutton .button_p{ background:url(images/weibe_button.gif) no-repeat; border:0;cursor:pointer; _cursor:hand; width:60px; height:25px;}
 #tw .tbutton .tinfo{ float:left; }
 #tw .msg{ clear:both}
 #tw li{list-style:none;}
-
 #tw ul .huifu textarea{background-color:#FFFFFF;}
 #tw ul .huifu input{background-color:#FFFFFF;}
 #tw ul li ul{ line-height:0;font-size:0;}
@@ -159,9 +156,4 @@ a img.aligncenter {display: block; border:none; margin:10px auto 10px auto;}
 #tw ul .huifu textarea{width:550px;}
 #tw ul li .bttome .post{ font-size:12px;line-height:14px;margin:0; text-align:right; float:none;clear:both; width:610px; background:0; border:0;}
 #tw ul li .bttome .time{ float:none; margin-top:-25px;}
-
-
-/*   following is added  3 oct 2010  */
-
-#header {float:left;}
-
+#tw p .t_img{background:url(images/img.gif) no-repeat;padding: 0 7px;margin: 0 0 0 10px;}
