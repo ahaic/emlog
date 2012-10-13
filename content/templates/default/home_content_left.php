@@ -29,21 +29,21 @@
 <div class="brand">
 <p> 销售品牌 </p>
 	<div class ="b_1 col"  style="float:left;margin:20px;" >
-	<img src="/emlog/content/uploadfile/201209/中威.png" >
+	<img src="/content/uploadfile/201209/中威.png" >
 	</div>
 	<div class = "b_2 col" style="float:left;margin:20px;">
 	<p>
-	<img src="/emlog/content/uploadfile/201209/朝阳轮胎.png" >
+	<img src="/content/uploadfile/201209/朝阳轮胎.png" >
 	</div>
 	
 	<div class = "b_3 col"  style="margin:20px; float:left;" >
-	<img src="/emlog/content/uploadfile/201209/佳通轮胎.jpeg">
+	<img src="/content/uploadfile/201209/佳通轮胎.jpeg">
 	</div>
 	<div class = "b_4 col" style="float:left; margin:20px;">
-	<img src="/emlog/content/uploadfile/201209/三角.jpeg">
+	<img src="/content/uploadfile/201209/三角.jpeg">
 	</div>
 	<div class="b_5 col" >
-	<img src = "/emlog/content/uploadfile/201209/邓禄普.jpeg">
+	<img src = "/content/uploadfile/201209/邓禄普.jpeg">
 	</div>
 	
 
