@@ -4,7 +4,7 @@ define('DB_HOST','localhost');
 //mysql database user
 define('DB_USER','root');
 //database password
-define('DB_PASSWD','');
+define('DB_PASSWD','google');
 //database name
 define('DB_NAME','emlog');
 //database prefix
