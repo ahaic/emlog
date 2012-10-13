@@ -7,12 +7,6 @@
 require_once '../init.php';
 
 define('TEMPLATE_PATH', TPLS_PATH.Option::get('nonce_templet').'/');//前台模板路径
-define('CURPAGE_HOME',  'home');
-define('CURPAGE_LOG',   'echo_log');
-define('CURPAGE_TW',    'twitter');
-
-$blogtitle = Option::get('twnavi') . ' - ' . Option::get('blogname');
-$description = Option::get('bloginfo');
 
 $action = isset($_GET['action']) ? addslashes($_GET['action']) : '';
 
@@ -26,27 +20,27 @@ if ($action == 'cal') {
 
 if ($action == '') {
 	$user_cache = $CACHE->readCache('user');
-    $options_cache = $CACHE->readCache('options');
+    $options_cache = Option::getAll();
     extract($options_cache);
     
-    $navibar = unserialize($navibar);
-
     $Twitter_Model = new Twitter_Model();
+    $Navi_Model = new Navi_Model();
 
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
     $tws = $Twitter_Model->getTwitters($page);
     $twnum = $Twitter_Model->getTwitterNum();
     $pageurl =  pagination($twnum, Option::get('index_twnum'), $page, BLOG_URL.'t/?page=');
     $avatar = empty($user_cache[UID]['avatar']) ? '../admin/views/images/avatar.jpg' : '../' . $user_cache[UID]['avatar'];
     $rcode = Option::get('reply_code') == 'y' ? "<img src=\"".DYNAMIC_BLOGURL."?action=ckcode&mode=t\" />" : '';
 
-    $curpage = CURPAGE_TW;
+    $site_title = $Navi_Model->getNaviNameByUrl('t') . ' - ' . $site_title;
+
     include View::getView('header');
     require_once View::getView('t');
     View::output();
 }
-// 获取回复.
+
+// 获取回复
 if ($action == 'getr') {
     $tid = isset($_GET['tid']) ? intval($_GET['tid']) : null;
 
@@ -54,25 +48,33 @@ if ($action == 'getr') {
     $replys = $Reply_Model->getReplys($tid, 'n');
 
     $response = '';
-    foreach($replys as $val){
-         $response .= "
-         <li>
-         <span class=\"name\">{$val['name']}</span> {$val['content']}<span class=\"time\">{$val['date']}</span>
-         <em><a href=\"javascript:re({$tid}, '@".addslashes($val['name'])."：');\">回复</a></em>
-         </li>";
+    if ($replys) {
+	    foreach($replys as $val){
+	    	$sub_reply = Option::get('istreply') == 'y' ? "<a href=\"javascript:re({$tid}, '@".addslashes($val['name'])."：');\">回复</a>" : '';
+	    	$response .= "
+	         <li>
+	         <span class=\"name\">{$val['name']}</span> {$val['content']}<span class=\"time\">{$val['date']}</span>
+	         <em>$sub_reply</em>
+	         </li>";
+	    }
+    } else{
+    	$response .= "<li>还没有回复！</li>";
     }
     echo $response;
 }
-// 回复碎语.
+
+// 回复碎语
 if ($action == 'reply') {
     $r = isset($_POST['r']) ? addslashes(trim($_POST['r'])) : '';
     $rname = isset($_POST['rname']) ? addslashes(trim($_POST['rname'])) : '';
     $rcode = isset($_POST['rcode']) ? strtoupper(addslashes(trim($_POST['rcode']))) : '';
     $tid = isset($_POST['tid']) ? intval(trim($_POST['tid'])) : '';
-    
+
     $user_cache = $CACHE->readCache('user');
 
-    if (!$r || strlen($r) > 420){
+    if (Option::get('istreply') == 'n' ) {
+    	exit('err0');
+    } elseif (!$r || strlen($r) > 420){
         exit('err1');
     } elseif (ROLE == 'visitor' && empty($rname)) {
         exit('err2');
@@ -124,7 +126,8 @@ if ($action == 'reply') {
          </li>";
     echo $response;
 }
-// 回复验证码.
+
+// 回复验证码
 if ($action == 'ckcode') {
     require_once EMLOG_ROOT.'/include/lib/checkcode.php';
 }

@@ -21,6 +21,9 @@ function em_confirm (id, property) {
 		case 'link':
 			var urlreturn="link.php?action=dellink&linkid="+id;
 			var msg = "你确定要删除该链接吗？";break;
+		case 'navi':
+			var urlreturn="navbar.php?action=del&id="+id;
+			var msg = "你确定要删除该导航吗？";break;
 		case 'backup':
 			var urlreturn="data.php?action=renewdata&sqlfile="+id;
 			var msg = "你确定要导入该备份文件吗？";break;
@@ -107,11 +110,18 @@ function checkalias(){
 		$("#msg").html('');
 	}
 }
-function addattach(imgurl,imgsrc,aid){
+function addattach_img(fileurl,imgsrc,aid){
 	if (KE.g['content'].wyswygMode == false){
 		alert('请先切换到所见所得模式');
-	}else {
-		KE.insertHtml('content','<a target=\"_blank\" href=\"'+imgurl+'\" id=\"ematt:'+aid+'\"><img src=\"'+imgsrc+'\" alt=\"点击查看原图\" border=\"0\"></a>');
+	}else if(imgsrc != "") {
+		KE.insertHtml('content','<a target=\"_blank\" href=\"'+fileurl+'\" id=\"ematt:'+aid+'\"><img src=\"'+imgsrc+'\" alt=\"点击查看原图\" border=\"0\"></a>');
+	}
+}
+function addattach_file(fileurl,filename,aid){
+	if (KE.g['content'].wyswygMode == false){
+		alert('请先切换到所见所得模式');
+	} else {
+		KE.insertHtml('content', '<a target=\"_blank\" href=\"'+fileurl+'\" >'+filename+'</a>');
 	}
 }
 function insertTag (tag, boxId){
@@ -136,8 +146,8 @@ function autosave(act){
 		var logid = $("#as_logid").val();
 		var content = KE.html('content');
 		var pageurl = $.trim($("#url").val());
-		var allow_remark = $.trim($("table input[name=allow_remark][checked]").val());
-		var is_blank = $.trim($("table input[name=is_blank][checked]").val());
+		var allow_remark = $("#page_options #allow_remark").attr("checked") == 'checked' ? 'y' : 'n';
+		var is_blank = $("#page_options #is_blank").attr("checked") == 'checked' ? 'y' : 'n';
 		var ishide = $.trim($("#ishide").val());
 		var ishide = ishide == "" ? "y" : ishide;
 		var querystr = "content="+encodeURIComponent(content)
@@ -160,9 +170,9 @@ function autosave(act){
 		var content = KE.html('content');
 		var excerpt = KE.html('excerpt');
 		var tag = $.trim($("#tag").val());
-		var top = $.trim($("#post_options input[name=top][checked]").val());
-		var allow_remark = $.trim($("#post_options input[name=allow_remark][checked]").val());
-		var allow_tb = $.trim($("#post_options input[name=allow_tb][checked]").val());
+		var top = $("#post_options #top").attr("checked") == 'checked' ? 'y' : 'n';
+		var allow_remark = $("#post_options #allow_remark").attr("checked") == 'checked' ? 'y' : 'n';
+		var allow_tb = $("#post_options #allow_tb").attr("checked") == 'checked' ? 'y' : 'n';
 		var password = $.trim($("#password").val());
 		var ishide = $.trim($("#ishide").val());
 		var ishide = ishide == "" ? "y" : ishide;

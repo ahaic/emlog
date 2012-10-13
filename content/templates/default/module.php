@@ -59,9 +59,7 @@ function widget_sort($title){
 	<?php foreach($sort_cache as $value): ?>
 	<li>
 	<a href="<?php echo Url::sort($value['sid']); ?>"><?php echo $value['sortname']; ?>(<?php echo $value['lognum'] ?>)</a>
-	<!-- 
 	<a href="<?php echo BLOG_URL; ?>rss.php?sort=<?php echo $value['sid']; ?>"><img src="<?php echo TEMPLATE_URL; ?>images/rss.png" alt="订阅该分类"/></a>
-	-->
 	</li>
 	<?php endforeach; ?>
 	</ul>
@@ -78,7 +76,8 @@ function widget_twitter($title){
 	<h3><span><?php echo $title; ?></span></h3>
 	<ul id="twitter">
 	<?php foreach($newtws_cache as $value): ?>
-	<li><?php echo $value['t']; ?><p><?php echo smartDate($value['date']); ?> </p></li>
+	<?php $img = empty($value['img']) ? "" : '<a title="查看图片" class="t_img" href="'.BLOG_URL.str_replace('thum-', '', $value['img']).'" target="_blank">&nbsp;</a>';?>
+	<li><?php echo $value['t']; ?><?php echo $img;?><p><?php echo smartDate($value['date']); ?></p></li>
 	<?php endforeach; ?>
     <?php if ($istwitter == 'y') :?>
 	<p><a href="<?php echo BLOG_URL . 't/'; ?>">更多&raquo;</a></p>
@@ -115,6 +114,21 @@ function widget_newlog($title){
 	<h3><span><?php echo $title; ?></span></h3>
 	<ul id="newlog">
 	<?php foreach($newLogs_cache as $value): ?>
+	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+	</li>
+<?php }?>
+<?php
+//widget：热门日志
+function widget_hotlog($title){
+	$index_hotlognum = Option::get('index_hotlognum');
+	$Log_Model = new Log_Model();
+	$randLogs = $Log_Model->getHotLog($index_hotlognum);?>
+	<li>
+	<h3><span><?php echo $title; ?></span></h3>
+	<ul id="hotlog">
+	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
@@ -188,6 +202,31 @@ function widget_link($title){
 	</li>
 <?php }?>
 <?php
+//blog：导航
+function blog_navi(){
+	global $CACHE; 
+	$navi_cache = $CACHE->readCache('navi');
+	?>
+	<ul>
+	<?php 
+	foreach($navi_cache as $value):
+		if($value['url'] == 'admin' && (ROLE == 'admin' || ROLE == 'writer')):
+			?>
+			<li class="common"><a href="<?php echo BLOG_URL; ?>admin/write_log.php">写日志</a></li>
+			<li class="common"><a href="<?php echo BLOG_URL; ?>admin/">管理站点</a></li>
+			<li class="common"><a href="<?php echo BLOG_URL; ?>admin/?action=logout">退出</a></li>
+			<?php 
+			continue;
+		endif;
+		$newtab = $value['newtab'] == 'y' ? 'target="_blank"' : '';
+		$value['url'] = $value['isdefault'] == 'y' ? BLOG_URL . $value['url'] : trim($value['url'], '/');
+		$current_tab = (BLOG_URL . trim(Dispatcher::setPath(), '/') == $value['url']) ? 'current' : 'common';
+		?>
+		<li class="<?php echo $current_tab;?>"><a href="<?php echo $value['url']; ?>" <?php echo $newtab;?>><?php echo $value['naviname']; ?></a></li>
+	<?php endforeach; ?>
+	</ul>
+<?php }?>
+<?php
 //blog：置顶
 function topflg($istop){
 	$topflg = $istop == 'y' ? "<img src=\"".TEMPLATE_URL."/images/import.gif\" title=\"置顶日志\" /> " : '';
@@ -211,21 +250,6 @@ function blog_sort($blogid){
 	分类：<a href="<?php echo Url::sort($log_cache_sort[$blogid]['id']); ?>"><?php echo $log_cache_sort[$blogid]['name']; ?></a>
 	<?php endif;?>
 <?php }?>
-<?php
-//blog：文件附件
-function blog_att($blogid){
-	global $CACHE;
-	$log_cache_atts = $CACHE->readCache('logatts');
-	$att = '';
-	if(!empty($log_cache_atts[$blogid])){
-		$att .= '附件下载：';
-		foreach($log_cache_atts[$blogid] as $val){
-			$att .= '<br /><a href="'.BLOG_URL.$val['url'].'" target="_blank">'.$val['filename'].'</a> '.$val['size'];
-		}
-	}
-	echo $att;
-}
-?>
 <?php
 //blog：日志标签
 function blog_tag($blogid){

@@ -4,13 +4,12 @@
  * @copyright (c) Emlog All Rights Reserved
  */
 
-class Url
-{
+class Url {
+
     /**
      * 获取日志链接
      */
-    static function log ($blogId)
-    {
+	static function log($blogId) {
     	$urlMode = Option::get('isurlrewrite');
         $logUrl = '';
         $CACHE = Cache::getInstance();
@@ -63,14 +62,13 @@ class Url
     }
 
     /**
-     * 获取归档链接
-     */
-    static function record ($record, $page = null)
-    {
-        $recordUrl = '';
-        switch (Option::get('isurlrewrite')) {
-            case '0':
-                $recordUrl = BLOG_URL . '?record=' . $record;
+	 * 获取归档链接
+	 */
+	static function record($record, $page = null) {
+		$recordUrl = '';
+		switch (Option::get('isurlrewrite')) {
+			case '0':
+				$recordUrl = BLOG_URL . '?record=' . $record;
                 if ($page)
                     $recordUrl .= '&page=';
                 break;
@@ -84,13 +82,12 @@ class Url
     }
 
     /**
-     * 获取分类链接
-     */
-    static function sort ($sortId, $page = null)
-    {
-        $CACHE = Cache::getInstance();
-        $sort_cache = $CACHE->readCache('sort');
-        $sort_index = !empty($sort_cache[$sortId]['alias']) ? $sort_cache[$sortId]['alias'] : $sortId;
+	 * 获取分类链接
+	 */
+	static function sort($sortId, $page = null) {
+		$CACHE = Cache::getInstance();
+		$sort_cache = $CACHE->readCache('sort');
+		$sort_index = !empty($sort_cache[$sortId]['alias']) ? $sort_cache[$sortId]['alias'] : $sortId;
         $sortUrl = '';
         switch (Option::get('isurlrewrite')) {
             case '0':
@@ -108,14 +105,13 @@ class Url
     }
 
     /**
-     * 获取作者链接
-     */
-    static function author ($authorId, $page = null)
-    {
-        $authorUrl = '';
-        switch (Option::get('isurlrewrite')) {
-            case '0':
-                $authorUrl = BLOG_URL . '?author=' . $authorId;
+	 * 获取作者链接
+	 */
+	static function author($authorId, $page = null) {
+		$authorUrl = '';
+		switch (Option::get('isurlrewrite')) {
+			case '0':
+				$authorUrl = BLOG_URL . '?author=' . $authorId;
                 if ($page)
                     $authorUrl .= '&page=';
                 break;
@@ -129,13 +125,12 @@ class Url
     }
 
     /**
-     * 获取标签链接
-     */
-    static function tag ($tag, $page = null)
-    {
-        $tagUrl = '';
-        switch (Option::get('isurlrewrite')) {
-            case '0':
+	 * 获取标签链接
+	 */
+	static function tag($tag, $page = null) {
+		$tagUrl = '';
+		switch (Option::get('isurlrewrite')) {
+			case '0':
                 $tagUrl = BLOG_URL . '?tag=' . $tag;
                 if ($page)
                     $tagUrl .= '&page=';
@@ -150,13 +145,12 @@ class Url
     }
 
     /**
-     * 获取首页日志分页链接
-     */
-    static function logPage ()
-    {
-        $logPageUrl = '';
-        switch (Option::get('isurlrewrite')) {
-            case '0':
+	 * 获取首页日志分页链接
+	 */
+	static function logPage() {
+		$logPageUrl = '';
+		switch (Option::get('isurlrewrite')) {
+			case '0':
                 $logPageUrl = BLOG_URL . '?page=';
                 break;
             default:
@@ -167,13 +161,12 @@ class Url
     }
 
     /**
-     * 获取评论链接
-     */
-    static function comment ($blogId, $pageId, $cid)
-    {
-    	$commentUrl = Url::log($blogId);
-    	if($pageId > 1) {
-    		if(Option::get('isurlrewrite') == 0 && strpos($commentUrl,'=') !== false) {
+	 * 获取评论链接
+	 */
+	static function comment($blogId, $pageId, $cid) {
+		$commentUrl = Url::log($blogId);
+		if ($pageId > 1) {
+			if (Option::get('isurlrewrite') == 0 && strpos($commentUrl, '=') !== false) {
 	    		$commentUrl .= '&comment-page=';
     		} else {
 	    		$commentUrl .= '/comment-page-';

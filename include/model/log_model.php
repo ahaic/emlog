@@ -92,7 +92,7 @@ class Log_Model {
 			$row['password'] = htmlspecialchars($row['password']);
 			$logData = $row;
 			return $logData;
-		}else {
+		} else {
 			return false;
 		}
 	}
@@ -101,15 +101,14 @@ class Log_Model {
 	 * 前台获取单条日志
 	 */
 	function getOneLogForHome($blogId) {
-		$timezone = Option::get('timezone');
 		$sql = "SELECT * FROM " . DB_PREFIX . "blog WHERE gid=$blogId AND hide='n'";
 		$res = $this->db->query($sql);
 		$row = $this->db->fetch_array($res);
 		if ($row) {
 			$logData = array(
-			    'log_title' => htmlspecialchars($row['title']),
+				'log_title' => htmlspecialchars($row['title']),
 				'timestamp' => $row['date'],
-				'date' => $row['date'] + $timezone * 3600,
+				'date' => $row['date'] + Option::get('timezone') * 3600,
 				'logid' => intval($row['gid']),
 				'sortid' => intval($row['sortid']),
 				'type' => $row['type'],
@@ -121,12 +120,12 @@ class Log_Model {
 				'tbcount' => intval($row['tbcount']),
 				'top' => $row['top'],
 				'attnum' => intval($row['attnum']),
-				'allow_remark' => $row['allow_remark'],
+				'allow_remark' => Option::get('iscomment') == 'y' ? $row['allow_remark'] : 'n',
 				'allow_tb' => $row['allow_tb'],
 				'password' => $row['password']
 				);
 			return $logData;
-		}else {
+		} else {
 			return false;
 		}
 	}
@@ -182,20 +181,40 @@ class Log_Model {
 			$row['log_title'] = htmlspecialchars(trim($row['title']));
 			$row['log_url'] = Url::log($row['gid']);
 			$row['logid'] = $row['gid'];
-		    $cookiePassword = isset($_COOKIE['em_logpwd_' . $row['gid']]) ? addslashes(trim($_COOKIE['em_logpwd_' . $row['gid']])) : '';
-            if (!empty($row['password']) && $cookiePassword != $row['password']) {
-                $row['excerpt'] = '<p>[该日志已设置加密，请点击标题输入密码访问]</p>';
-            }else {
-                if (!empty($row['excerpt'])) {
-                    $row['excerpt'] .= '<p class="readmore"><a href="' . Url::log($row['logid']) . '">阅读全文&gt;&gt;</a></p>';
-                }
-            }
+			$cookiePassword = isset($_COOKIE['em_logpwd_' . $row['gid']]) ? addslashes(trim($_COOKIE['em_logpwd_' . $row['gid']])) : '';
+			if (!empty($row['password']) && $cookiePassword != $row['password']) {
+				$row['excerpt'] = '<p>[该日志已设置加密，请点击标题输入密码访问]</p>';
+			} else {
+				if (!empty($row['excerpt'])) {
+					$row['excerpt'] .= '<p class="readmore"><a href="' . Url::log($row['logid']) . '">阅读全文&gt;&gt;</a></p>';
+				}
+			}
 			$row['log_description'] = empty($row['excerpt']) ? breakLog($row['content'], $row['gid']) : $row['excerpt'];
 			$row['attachment'] = '';
 			$row['tag'] = '';
 			$logs[] = $row;
 		}
 		return $logs;
+	}
+
+	/**
+	 * 获取全部页面列表
+	 *
+	 */
+	function getAllPageList() {
+		$sql = "SELECT * FROM " . DB_PREFIX . "blog WHERE type='page'";
+		$res = $this->db->query($sql);
+		$pages = array();
+		while ($row = $this->db->fetch_array($res)) {
+			$row['date']	= gmdate("Y-m-d H:i", $row['date'] + Option::get('timezone') * 3600);
+			$row['title'] 	= !empty($row['title']) ? htmlspecialchars($row['title']) : '无标题';
+			//$row['gid'] 	= $row['gid'];
+			//$row['comnum'] 	= $row['comnum'];
+			//$row['top'] 	= $row['top'];
+			//$row['attnum'] 	= $row['attnum'];
+			$pages[] = $row;
+		}
+		return $pages;
 	}
 
 	/**
@@ -307,12 +326,24 @@ class Log_Model {
 
 	/**
 	 * 随机获取指定数量日志
-	 *
-	 * @param int $num
-	 * @return array
 	 */
 	function getRandLog($num) {
 		$sql = "SELECT gid,title FROM " . DB_PREFIX . "blog WHERE hide='n' and type='blog' ORDER BY rand() LIMIT 0, $num";
+		$res = $this->db->query($sql);
+		$logs = array();
+		while ($row = $this->db->fetch_array($res)) {
+			$row['gid'] = intval($row['gid']);
+			$row['title'] = htmlspecialchars($row['title']);
+			$logs[] = $row;
+		}
+		return $logs;
+	}
+
+	/**
+	 * 获取热门日志
+	 */
+	function getHotLog($num) {
+		$sql = "SELECT gid,title FROM " . DB_PREFIX . "blog WHERE hide='n' and type='blog' ORDER BY views DESC, comnum DESC LIMIT 0, $num";
 		$res = $this->db->query($sql);
 		$logs = array();
 		while ($row = $this->db->fetch_array($res)) {
@@ -330,20 +361,20 @@ class Log_Model {
 	 * @param array $logalias_cache
 	 * @param int $logid
 	 */
-    function checkAlias($alias, $logalias_cache, $logid) {
-    	static $i=2;
-    	$key = array_search($alias, $logalias_cache);
-        if (false !== $key && $key != $logid) {
-        	if($i == 2) {
-        		$alias .= '-'.$i;
-        	}else{
-        		$alias = preg_replace("|(.*)-([\d]+)|", "$1-{$i}", $alias);
-        	}
-    		$i++;
-    		return $this->checkAlias($alias, $logalias_cache, $logid);
-   		}
-   		return $alias;
-    }
+	function checkAlias($alias, $logalias_cache, $logid) {
+		static $i=2;
+		$key = array_search($alias, $logalias_cache);
+		if (false !== $key && $key != $logid) {
+			if($i == 2) {
+				$alias .= '-'.$i;
+			}else{
+				$alias = preg_replace("|(.*)-([\d]+)|", "$1-{$i}", $alias);
+			}
+			$i++;
+			return $this->checkAlias($alias, $logalias_cache, $logid);
+		}
+		return $alias;
+	}
 
 	/**
 	 * 加密日志访问验证
@@ -382,7 +413,7 @@ EOT;
 				setcookie('em_logpwd_' . $logid, ' ', time() - 31536000);
 			}
 			exit;
-		}else {
+		} else {
 			setcookie('em_logpwd_' . $logid, $logPwd);
 		}
 	}

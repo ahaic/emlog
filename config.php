@@ -1,15 +1,16 @@
 <?php
+header("location: ./install.php");exit;
 //mysql database address
 define('DB_HOST','localhost');
 //mysql database user
 define('DB_USER','root');
 //database password
-define('DB_PASSWD','google');
+define('DB_PASSWD','');
 //database name
-define('DB_NAME','tyre');
+define('DB_NAME','emlog');
 //database prefix
-define('DB_PREFIX','tyre_');
+define('DB_PREFIX','emlog_');
 //auth key
-define('AUTH_KEY','bmapfKlyST5jNkSW7*kgZiYxH83cLkQS5fdacb5d6301f52551f1d8418e1ff14d');
+define('AUTH_KEY','VWq5RC2k1T*^1gdvJ1*VFn50e1LSgc#M4c8ba17bcb8bf97039c28fe8d792d7c5');
 //cookie name
-define('AUTH_COOKIE_NAME','EM_AUTHCOOKIE_f9rpdVb0hUHzBg6ktA41r8MyooRsDrpL');
+define('AUTH_COOKIE_NAME','EM_AUTHCOOKIE_gSozFLFifPYsLA2MZC4lLv3d23jvbo7Q');

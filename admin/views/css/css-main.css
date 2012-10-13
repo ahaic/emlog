@@ -199,8 +199,9 @@ textarea {
 	float:left;
 	padding:0px 0px 0px 0px;
 	margin:5px 0px 0px 0px;
-	background-color:#ECEFF5;
-	width:405px
+	background-color:#F7F7F7;
+	border:1px solid #F0F0F0;
+	width:403px
 }
 .widget-top li {
 	float:left;
@@ -218,7 +219,9 @@ textarea {
 	padding:10px 10px;
 	display:none;
 	margin:0px 0px 5px 0px;
-	border:1px solid #E9F1FA
+	border-left:1px solid #F3F3F3;
+	border-right:1px solid #F3F3F3;
+	border-bottom:1px solid #F3F3F3;
 }
 .widget-act-del {
 	background:url(../images/icon_del.gif) no-repeat center;
@@ -263,7 +266,8 @@ textarea {
 	padding:5px
 }
 .sortableitem {
-	background-color:#ECEFF5;
+	background-color:#F7F7F7;
+	border:1px solid #F0F0F0;
 	list-style:none;
 	margin:5px 0px;
 	padding:5px;
@@ -338,7 +342,8 @@ textarea {
 }
 .ajax_remind_1 {
 	padding:3px 5px;
-	background-color:#FDFFCE
+	background-color:#FDFFCE;
+    color:#CCCCCC;
 }
 #user,#pw {
 	height:28px;
@@ -469,7 +474,6 @@ textarea {
 	margin:5px
 }
 #admindex_msg span {
-	color:#CCC;
 	float:right
 }
 #admindex div h3 {
@@ -595,8 +599,29 @@ textarea {
 	margin:0px 5px;
 }
 #tw .tbutton {
-	margin:3px 0px 0px 5px;
+	margin:5px 0px 0px 5px;
 	float:left;
+}
+#tw .twImg{
+	float:left;
+	margin: 7px 0 0 5px;
+	position: relative;
+}
+.t_img{
+	background:url(../images/img.gif) no-repeat;
+	padding: 0 7px;
+	margin: 0 0 0 10px;
+}
+#img_pop {
+	background: #F9F9F9;
+	border: 1px solid #E5E5E5;
+	display: none;
+	left: 0;
+	margin: 3px 0 8px;
+	padding: 4px;
+	position: absolute;
+	bottom: 10px;
+	z-index: 120;
 }
 #tw .tbutton input {
 	background:url(../images/weibe_button.gif) no-repeat;
@@ -748,11 +773,6 @@ textarea {
 #tw_line li {
 	margin:0px 0px 20px;
 }
-#tw_line img {
-	width:28px;
-	height:28px;
-	border:1px solid #EFEFEF;
-}
 #tw_line .tw_date {
 	color:#CCCCCC;
 	float:right;
@@ -897,6 +917,73 @@ textarea {
 	line-height:1.2em;
 	padding:4px 10px 4px 28px;
 }
-#user_new li,#sort_new li, #user_edit li {
+#user_new li,#sort_new li, #user_edit li, #navi_edit li, #profile li , #chpwd li{
 	margin:12px 0px;
+}
+#navi_add{
+	margin:20px 0px 120px 0px;
+}
+#navi_add h1{
+	font-size:12px;
+	font-weight:normal;
+	border:#E5E5E5 solid 1px;
+	border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+	border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+	background-color:#F1F1F1;
+	padding:2px 5px;
+	margin:0px;
+	background: url("../images/admindex_itembg.gif") repeat-x scroll center bottom transparent;
+	cursor:pointer;
+}
+#navi_add div{
+	width:270px;
+	float:left;
+	margin:10px 10px 0px 0px;
+}
+#navi_add ul{
+	border-left:#E5E5E5 solid 1px;
+	border-right:#E5E5E5 solid 1px;
+	border-bottom:#E5E5E5 solid 1px;
+	padding:8px;
+	background-color:#F6F6F6;
+	margin:0px;
+}
+#navi_add ul li{
+	padding:3px 0px;
+}
+
+#recommend_template{
+	width:750;
+}
+#recommend_template ul{
+	float:left;
+	width:200px;
+	margin:10px 30px;
+	padding:0px;
+	text-align:center;
+}
+#recommend_template img{
+	border:1px solid #CCC;
+}
+#recommend_template p{
+	padding:0px 40px;
+}
+
+#recommend_plugin{
+	width:750;
+}
+#recommend_plugin ul{
+	float:left;
+	width:120px;
+	margin:10px 30px;
+	padding:0px;
+	text-align:center;
+}
+#recommend_plugin img{
+	border:1px solid #CCC;
+}
+#recommend_plugin p{
+	padding:0px 40px;
 }

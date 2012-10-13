@@ -6,17 +6,10 @@
  */
 
 class Tag_Controller {
-
-	/**
-	 * 前台标签日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
-		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
 
 		$page = isset($params[4]) && $params[4] == 'page' ? abs(intval($params[5])) : 1;
 		$tag = isset($params[1]) && $params[1] == 'tag' ? addslashes(urldecode(trim($params[2]))) : '';
@@ -25,15 +18,13 @@ class Tag_Controller {
 		$pageurl = '';
 
 		//page meta
-		$blogtitle = stripslashes($tag).' - '.$blogname;
-		$description = $bloginfo;
-		$site_key .= ','.$tag;
+		$site_title = stripslashes($tag) . ' - ' . $site_title;
 
 		$Tag_Model = new Tag_Model();
 		$blogIdStr = $Tag_Model->getTagByName($tag);
 
 		if ($blogIdStr === false) {
-			emMsg('404', BLOG_URL);
+			show_404_page();
 		}
 		$sqlSegment = "and gid IN ($blogIdStr) order by date desc";
 		$lognum = $Log_Model->getLogNum('n', $sqlSegment);

@@ -2,32 +2,20 @@
 /**
  * 显示首页、内容
  *
- *控制首页显示内容
  * @copyright (c) Emlog All Rights Reserved
  */
 
 class Log_Controller {
-
-	/**
-	 * 前台日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
 		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
-		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
 
-		//page meta
-		$blogtitle = $blogname;
-		$description = $bloginfo;
+		$options_cache = Option::getAll();
+		extract($options_cache);
 
 		$page = isset($params[1]) && $params[1] == 'page' ? abs(intval($params[2])) : 1;
-
 		$start_limit = ($page - 1) * $index_lognum;
 		$pageurl = '';
-
 		$sqlSegment ='ORDER BY top DESC ,date DESC';
 		$sta_cache = $CACHE->readCache('sta');
 		$lognum = $sta_cache['lognum'];
@@ -36,37 +24,19 @@ class Log_Controller {
 		$page_url = pagination($lognum, $index_lognum, $page, $pageurl);
 
 		include View::getView('header');
-
-	//	include View::getView('log_list');   //注视掉 首页则不显示 content 和 footer 部分,因为其中已包含 footer content side
-	
-
-		// echo "显示首页内容";   //后来添加 以供测试
-		
-		include View::getView('home_content_left');   //后来添加 ,显示首页内容
-		
-		include View::getView('side');     // 后来添加     
-		include View::getView('footer');    //后来添加    
-		
-		
-		
+		include View::getView('log_list');
 	}
 
-
-	
-	
-	/**
-	 * 前台日志内容页面输出
-	 */
 	function displayContent($params) {
 		$comment_page = isset($params[4]) && $params[4] == 'comment-page' ? intval($params[5]) : 1;
+
 		$Log_Model = new Log_Model();
 		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
 
 		$logid = 0 ;
-
 		if (isset($params[1])) {
 			if ($params[1] == 'post') {
 				$logid = isset($params[2]) ? intval($params[2]) : 0;
@@ -78,7 +48,7 @@ class Log_Controller {
 					$alias = addslashes(urldecode(trim($params[1])));
 					$logid = array_search($alias, $logalias_cache);
 					if (!$logid) {
-						emMsg('404', BLOG_URL);
+						show_404_page();
 					}
 				}
 			}
@@ -89,7 +59,7 @@ class Log_Controller {
 
 		$logData = $Log_Model->getOneLogForHome($logid);
 		if ($logData === false) {
-			emMsg('404', BLOG_URL);
+			show_404_page();
 		}
 		extract($logData);
 
@@ -99,11 +69,11 @@ class Log_Controller {
 			$Log_Model->AuthPassword($postpwd, $cookiepwd, $password, $logid);
 		}
 		//page meta
-		$blogtitle = $log_title.' - '.$blogname;
-		$description = extractHtmlData($log_content, 330);
+		$site_title = $log_title . ' - ' . $site_title;
+		$site_description = extractHtmlData($log_content, 330);
 		$log_cache_tags = $CACHE->readCache('logtags');
-		if (!empty($log_cache_tags[$logid])){
-			foreach ($log_cache_tags[$logid] as $value){
+		if (!empty($log_cache_tags[$logid])) {
+			foreach ($log_cache_tags[$logid] as $value) {
 				$site_key .= ','.$value['tagname'];
 			}
 		}
@@ -114,14 +84,13 @@ class Log_Controller {
 		$ckurl = isset($_COOKIE['posterurl']) ? htmlspecialchars($_COOKIE['posterurl']) : '';
 		$comments = $Comment_Model->getComments(0, $logid, 'n', $comment_page);
 
-		$curpage = CURPAGE_LOG;
 		include View::getView('header');
 		if ($type == 'blog') {
 			$Log_Model->updateViewCount($logid);
 			$neighborLog = $Log_Model->neighborLog($timestamp);
 			$tb = $Trackback_Model->getTrackbacks(null, $logid, 0);
 			$tb_url = BLOG_URL . 'tb.php?sc=' . $tbscode . '&id=' . $logid; 
-			require_once View::getView('echo_log');
+			include View::getView('echo_log');
 		}elseif ($type == 'page') {
 			include View::getView('page');
 		}

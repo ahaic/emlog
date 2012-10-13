@@ -1,6 +1,6 @@
 <?php
 /**
- * mobile 版本
+ * 手机版本
  *
  * @copyright (c) Emlog All Rights Reserved
  */
@@ -254,7 +254,7 @@ if ($action == 'reply') {
 	View::output();
 }
 // 碎语
-if ($action == 'tw') {
+if ($action == 'tw' && Option::get('istwitter') == 'y') {
     $Twitter_Model = new Twitter_Model();
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     $user_cache = $CACHE->readCache('user');
@@ -271,6 +271,12 @@ if (ISLOGIN === true && $action == 't') {
     $Twitter_Model = new Twitter_Model();
 
     $t = isset($_POST['t']) ? addslashes(trim($_POST['t'])) : '';
+    $attach = isset($_FILES['img']) ? $_FILES['img'] : '';
+
+    if ($attach['tmp_name'] && !$t) {
+    	$t = '分享图片';
+    }
+
     if (!$t){
         emDirect("./?action=tw");
     }
@@ -278,6 +284,22 @@ if (ISLOGIN === true && $action == 't') {
             'author' => UID,
             'date' => time(),
     );
+
+	if ($attach['tmp_name']) {
+		$upfname = uploadFile($attach['name'], $attach['error'], $attach['tmp_name'], $attach['size'], array('jpg', 'jpeg','png'), false, false);
+		$size = @getimagesize($upfname);
+		$w = $size[0];
+		$h = $size[1];
+		if ($w>150 || $h>120) {
+			$uppath = Option::UPLOADFILE_PATH . gmdate('Ym') . '/';
+			$thum = str_replace($uppath,$uppath.'thum-',$upfname);
+			resizeImage($upfname, $thum, 120, 150);
+			$upfname = $thum;
+		}
+
+		$tdata['img'] = str_replace('../', '', $upfname);
+	}
+
     $Twitter_Model->addTwitter($tdata);
     $CACHE->updateCache(array('sta','newtw'));
     doAction('post_twitter', $t);

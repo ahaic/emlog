@@ -6,17 +6,11 @@
  */
 
 class Sort_Controller {
-
-	/**
-	 * 前台分类日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
 		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
 
 		$page = isset($params[4]) && $params[4] == 'page' ? abs(intval($params[5])) : 1;
 
@@ -41,13 +35,11 @@ class Sort_Controller {
 
 		$sort_cache = $CACHE->readCache('sort');
 		if (!isset($sort_cache[$sortid])) {
-			emMsg('404', BLOG_URL);
+			show_404_page();
 		}
 		$sortName = $sort_cache[$sortid]['sortname'];
 		//page meta
-		$blogtitle = $sortName.' - '.$blogname;
-		$description = $bloginfo;
-		$site_key .= ','.$sortName;
+		$site_title = $sortName . ' - ' . $site_title;
 
 		$sqlSegment = "and sortid=$sortid order by date desc";
 		$lognum = $Log_Model->getLogNum('n', $sqlSegment);

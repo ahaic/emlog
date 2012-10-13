@@ -27,7 +27,7 @@
 	}
 	jQuery(document).ready(function() {
 		var xinit = 960;
-		var yinit = 350;                        //更改首页图片 高度限制
+		var yinit = 134;
 		var ratio = xinit / yinit;
 		var ximg = jQuery('img#upload').width();
 		var yimg = jQuery('img#upload').height();
@@ -51,7 +51,7 @@
 			y1: 0,
 			x2: xinit,
 			y2: yinit,
-			maxHeight: 350,                  //更改首页图片 高度限制
+			maxHeight: 134,
 			maxWidth: 960,
 			onInit: function () {
 				jQuery('#width').val(xinit);

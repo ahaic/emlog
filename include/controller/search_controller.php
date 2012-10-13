@@ -6,19 +6,10 @@
  */
 
 class Search_Controller {
-
-	/**
-	 * 前台查询日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
-		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
-		$description = $bloginfo;
-		$blogtitle = $blogname;
 
 		$page = isset($params[4]) && $params[4] == 'page' ? abs(intval($params[5])) : 1;
 		$keyword = isset($params[1]) && $params[1] == 'keyword' ? addslashes(urldecode(trim($params[2]))) : '';

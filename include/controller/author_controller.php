@@ -6,17 +6,11 @@
  */
 
 class Author_Controller {
-
-	/**
-	 * 前台作者日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
 		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
 
 		$page = isset($params[4]) && $params[4] == 'page' ? abs(intval($params[5])) : 1;
 		$author = isset($params[1]) && $params[1] == 'author' ? intval($params[2]) : '' ;
@@ -26,14 +20,12 @@ class Author_Controller {
 
 		$user_cache = $CACHE->readCache('user');
 		if (!isset($user_cache[$author])) {
-			emMsg('404', BLOG_URL);
+			show_404_page();
 		}
 
 		$author_name = $user_cache[$author]['name'];
 		//page meta
-		$blogtitle = $author_name . ' - ' . $blogname;
-		$description = $bloginfo;
-		$site_key .= ','.$author_name;
+		$site_title = $author_name . ' - ' . $site_title;
 
 		$sqlSegment = "and author=$author order by date desc";
 		$sta_cache = $CACHE->readCache('sta');

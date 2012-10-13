@@ -6,17 +6,10 @@
  */
 
 class Record_Controller {
-
-	/**
-	 * 前台归档日志列表页面输出
-	 */
 	function display($params) {
 		$Log_Model = new Log_Model();
-		$CACHE = Cache::getInstance();
-		$options_cache = $CACHE->readCache('options');
+		$options_cache = Option::getAll();
 		extract($options_cache);
-		$navibar = unserialize($navibar);
-		$curpage = CURPAGE_HOME;
 
 		$page = isset($params[4]) && $params[4] == 'page' ? abs(intval($params[5])) : 1;
 		$record = isset($params[1]) && $params[1] == 'record' ? intval($params[2]) : '' ;
@@ -27,8 +20,7 @@ class Record_Controller {
 		$pageurl = '';
 
 		//page meta
-		$blogtitle = $record.' - '.$blogname;
-		$description = $bloginfo;
+		$site_title = $record . ' - ' . $site_title;
 
 		if (preg_match("/^([\d]{4})([\d]{2})$/", $record, $match)) {
 			$days = getMonthDayNum($match[2], $match[1]);

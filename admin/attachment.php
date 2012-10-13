@@ -54,7 +54,6 @@ if ($action == 'upload') {
 if ($action == 'upload_multi') {
 	$logid = isset($_GET['logid']) ? intval($_GET['logid']) : '';
 	$attach = isset($_FILES['attach']) ? $_FILES['attach'] : '';
-	error_log("upload_multi:$logid".print_r($attach,1), 3 , "D:\a.txt");
 	if ($attach) {
 		if ($attach['error'] != 4) {
 			$isthumbnail = Option::get('isthumbnail') == 'y' ? true : false;
@@ -108,4 +107,37 @@ if ($action == 'del_attach') {
 	$DB->query("DELETE FROM ".DB_PREFIX."attachment where aid=$aid ");
 	$CACHE->updateCache('logatts');
 	emDirect("attachment.php?action=attlib&logid=$logid");
+}
+
+if ($action == 'upload_tw_img') {
+	$attach = isset($_FILES['attach']) ? $_FILES['attach'] : '';
+	if ($attach) {
+		$upfname = uploadFile($attach['name'], $attach['error'], $attach['tmp_name'], $attach['size'], Option::getAttType(), false, false);
+		$size = @getimagesize($upfname);
+		$w = $size[0];
+		$h = $size[1];
+		if ($w > Option::T_IMG_MAX_W || $h > Option::T_IMG_MAX_H) {
+			$uppath = Option::UPLOADFILE_PATH . gmdate('Ym') . '/';
+			$thum = str_replace($uppath, $uppath.'thum-', $upfname);
+			if (false !== resizeImage($upfname, $thum, Option::T_IMG_MAX_W, Option::T_IMG_MAX_H)) {
+				$upfname = $thum;
+			}
+		}
+		echo '{"filePath":"'.$upfname.'"}';
+		exit;
+	}
+	echo '{"filePath":""}';
+	exit;
+}
+
+if ($action == 'del_tw_img') {
+	$filepath = isset($_GET['filepath']) ? $_GET['filepath'] : '';
+	if ($filepath && file_exists($filepath)) {
+		$fpath = str_replace('thum-', '', $filepath);
+		if ($fpath != $filepath) {
+			@unlink($fpath) or false;
+		}
+		@unlink($filepath) or false;
+	}
+	exit;
 }
