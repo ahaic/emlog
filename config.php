@@ -6,7 +6,7 @@ define('DB_USER','root');
 //database password
 define('DB_PASSWD','google');
 //database name
-define('DB_NAME','emlog');
+define('DB_NAME','tyre');
 //database prefix
 define('DB_PREFIX','emlog_');
 //auth key
