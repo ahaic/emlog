@@ -1,0 +1,15 @@
+<?php exit;//a:48:{s:8:"blogname";s:27:"常州市威海轮胎销售";s:8:"bloginfo";s:30:"专业销售各种型号轮胎";s:8:"site_key";s:27:"轮胎;常州;农机市场;";s:7:"blogurl";s:25:"http://192.168.9.1/emlog/";s:3:"icp";s:0:"";s:11:"footer_info";s:560:"常州威海轮胎经营部  - 常州市新北区通江路农机市场
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34232192-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>";s:17:"admin_perpage_num";s:2:"15";s:14:"rss_output_num";s:2:"10";s:19:"rss_output_fulltext";s:1:"y";s:12:"index_lognum";s:2:"10";s:12:"index_comnum";s:2:"10";s:11:"index_twnum";s:2:"10";s:14:"index_newtwnum";s:1:"5";s:15:"index_newlognum";s:1:"5";s:16:"index_randlognum";s:1:"5";s:14:"comment_subnum";s:2:"20";s:13:"nonce_templet";s:7:"default";s:11:"admin_style";s:7:"default";s:11:"tpl_sidenum";s:1:"1";s:12:"comment_code";s:1:"n";s:10:"isgravatar";s:1:"y";s:11:"isthumbnail";s:1:"y";s:14:"comment_paging";s:1:"n";s:12:"comment_pnum";s:2:"20";s:13:"comment_order";s:5:"newer";s:10:"login_code";s:1:"n";s:10:"reply_code";s:1:"n";s:12:"ischkcomment";s:1:"n";s:10:"ischkreply";s:1:"n";s:12:"isurlrewrite";s:1:"0";s:7:"isalias";s:1:"n";s:12:"isalias_html";s:1:"n";s:12:"isgzipenable";s:1:"n";s:11:"istrackback";s:1:"y";s:14:"isxmlrpcenable";s:1:"n";s:9:"istwitter";s:1:"n";s:6:"twnavi";s:6:"碎语";s:6:"topimg";s:44:"content/uploadfile/201209/top-1348506029.jpg";s:14:"custom_topimgs";s:118:"a:2:{i:0;s:44:"content/uploadfile/201209/top-1347953588.jpg";i:1;s:44:"content/uploadfile/201209/top-1348506029.jpg";}";s:8:"timezone";s:1:"8";s:14:"active_plugins";s:37:"a:1:{i:0;s:19:"sitemap/sitemap.php";}";s:7:"navibar";s:399:"a:4:{i:2;a:4:{s:5:"title";s:12:"关于我们";s:3:"url";s:0:"";s:8:"is_blank";s:0:"";s:4:"hide";s:1:"n";}i:3;a:4:{s:5:"title";s:6:"产品";s:3:"url";s:0:"";s:8:"is_blank";s:0:"";s:4:"hide";s:1:"n";}i:5;a:4:{s:5:"title";s:12:"服务网络";s:3:"url";s:0:"";s:8:"is_blank";s:0:"";s:4:"hide";s:1:"n";}i:6;a:4:{s:5:"title";s:12:"招聘信息";s:3:"url";s:0:"";s:8:"is_blank";s:0:"";s:4:"hide";s:1:"n";}}";s:12:"widget_title";s:384:"a:12:{s:7:"blogger";s:7:"blogger";s:8:"calendar";s:6:"日历";s:7:"twitter";s:12:"最新碎语";s:3:"tag";s:6:"标签";s:4:"sort";s:21:"分类 (产品分类)";s:7:"archive";s:6:"存档";s:7:"newcomm";s:12:"最新评论";s:6:"newlog";s:12:"最新日志";s:10:"random_log";s:12:"随机日志";s:4:"link";s:6:"链接";s:6:"search";s:6:"搜索";s:11:"custom_text";s:15:"自定义组件";}";s:13:"custom_widget";s:6:"a:0:{}";s:8:"widgets1";s:38:"a:2:{i:0;s:6:"search";i:1;s:4:"sort";}";s:8:"widgets2";s:0:"";s:8:"widgets3";s:0:"";s:8:"widgets4";s:0:"";}
