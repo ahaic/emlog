@@ -9,7 +9,7 @@ if(!defined('EMLOG_ROOT')) {exit('error!');}
 <div id="footerbar">
 <?php echo $footer_info; ?>
 &nbsp; &nbsp;&nbsp; &nbsp;
-Powered by <a href="/admin.php" title="emlog <?php echo Option::EMLOG_VERSION;?>">emlog</a> 
+Powered by <a href="/admin" title="emlog <?php echo Option::EMLOG_VERSION;?>">emlog</a> 
 
 
 <a href="http://www.miibeian.gov.cn" target="_blank"><?php echo $icp; ?></a> 
